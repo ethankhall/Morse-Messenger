@@ -1,4 +1,7 @@
-package com.kopysoft.MorseMessenger;
+package com.kopysoft.MorseMessenger.recieve;
+
+import com.kopysoft.MorseMessenger.Defines;
+import com.kopysoft.MorseMessenger.StringMap;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -6,7 +6,7 @@ import java.util.Map;
 public class StringMap {
 
 	Map<String, String> m = new HashMap<String, String>();
-	StringMap(){
+	public StringMap(){
 		m.put("A", ".-");
         m.put("B", "-...");
         m.put("C", "-.-.");
@@ -43,7 +43,24 @@ public class StringMap {
         m.put("8", "---..");
         m.put("9","----.");
         m.put("0", "-----");
-        m.put(" ", "...");
+        m.put(".", ".-.-.-");
+        m.put(",", "--..--");
+        m.put("?", "..--..");
+        m.put("'", ".----.");
+        m.put("!", "-.-.--");
+        m.put("/", "-..-.");
+        m.put("(", "-.--.");
+        m.put(")", "-.--.-");
+        m.put("&", ".-...");
+        m.put(":", "---...");
+        m.put(";", "-.-.-.");
+        m.put("=", "-...-");
+        m.put("+", ".-.-.");
+        m.put("-", "-....-");
+        m.put("_", "..--.-");
+        m.put("\"", ".-..-.");
+        m.put("$", "...-..-");
+        m.put("@", ".--.-.");
 	}
 	
 	public String getVal(String value){

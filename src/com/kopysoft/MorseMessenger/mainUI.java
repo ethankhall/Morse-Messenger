@@ -29,7 +29,7 @@ public class mainUI extends Activity {
     	
     	Log.d(Defines.TAG, message);
     	Intent runIntent = new Intent().setClass(getApplicationContext(), 
-				com.kopysoft.MorseMessenger.PlayMessage.class);
+				com.kopysoft.MorseMessenger.recieve.PlayMessage.class);
     	runIntent.putExtra("message", message);
     	runIntent.putExtra("speed", speed);
 		getApplicationContext().sendBroadcast(runIntent);

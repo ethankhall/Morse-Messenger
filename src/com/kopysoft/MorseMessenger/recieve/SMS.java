@@ -40,7 +40,7 @@ public class SMS extends BroadcastReceiver {
 			Log.d(Defines.TAG, messages);
 			
 			Intent runIntent = new Intent().setClass(context, 
-					com.kopysoft.MorseMessenger.PlayMessage.class);
+					com.kopysoft.MorseMessenger.recieve.PlayMessage.class);
 	    	runIntent.putExtra("message", body);
 	    	runIntent.putExtra("speed", 80);
 	    	context.sendBroadcast(runIntent);

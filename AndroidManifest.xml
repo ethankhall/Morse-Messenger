@@ -11,7 +11,7 @@
 			</intent-filter>
 		</activity>
 		
-		<receiver android:process=":remote" android:name="PlayMessage"
+		<receiver android:process=":remote" android:name="recieve.PlayMessage"
 			android:enabled="true" />
 		
 		<receiver android:name="recieve.SMS">
