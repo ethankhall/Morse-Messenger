@@ -1,4 +1,4 @@
-package com.kopysoft.MorisCode.recieve;
+package com.kopysoft.MorseMessenger.recieve;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
