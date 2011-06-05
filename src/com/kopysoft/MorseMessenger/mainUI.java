@@ -19,8 +19,6 @@ public class mainUI extends Activity {
     }
    
     public void onClick(View view){
-    	//MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.a);
-    	//mp.start();
     	SeekBar speedBar = (SeekBar) findViewById(R.id.seekBar1);
     	EditText messageView = (EditText) findViewById(R.id.editText1);
     	
