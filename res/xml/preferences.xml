@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="SMS Messenger Settings">
+		<CheckBoxPreference 
+			android:key = "playBody"
+			android:title="Body"
+			android:summary="Morse out message body" />
+		<CheckBoxPreference 
+			android:key = "playSender"
+			android:title = "Sender"
+			android:summary = "Morse out sender" />
+		<com.kopysoft.MorseMessenger.SeekBarPreference android:key="Volume"
+	        android:title="Volume"
+	        android:defaultValue="100"
+	        android:max="100"
+	        android:text="Lower/Higher" />
+	    <CheckBoxPreference 
+			android:key = "playInViberate"
+			android:title = "Viberate"
+			android:summary = "Play when in viberate mode" />
+		<CheckBoxPreference 
+			android:key = "playInNormal"
+			android:title = "Normal"
+			android:summary = "Play when in normal" />
+	</PreferenceCategory>
+    <PreferenceCategory android:title="Morse Code Settings">
+	    <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseSpeedSound"
+	        android:title="Speed"
+	        android:summary="How fast to beep"
+	        android:defaultValue="65"
+	        android:max="110"
+	        android:text="Slower/Faster"
+	        />
+	    <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseTone"
+	        android:title="Frequency"
+	        android:summary="Frequency of the tone"
+	        android:defaultValue="7"
+	        android:max="15"
+	        android:text="Lower/Higher"
+	        />
+	    <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseSpeedVib"
+	        android:title="Speed"
+	        android:summary="How fast to viberate"
+	        android:defaultValue="75"
+	        android:max="110"
+	        android:text="Slower/Faster"
+	        />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Other">
+		<Preference android:title="Send e-mail to developer"
+				android:key="emailDev" />
+	</PreferenceCategory>
+</PreferenceScreen>

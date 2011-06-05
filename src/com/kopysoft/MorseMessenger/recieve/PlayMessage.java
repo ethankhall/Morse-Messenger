@@ -1,5 +1,3 @@
-package com.kopysoft.MorseMessenger.recieve;
-
 /**
  * 			Copyright (C) 2011 by Ethan Hall
  * 
@@ -23,6 +21,8 @@ package com.kopysoft.MorseMessenger.recieve;
  *  
  */
 
+package com.kopysoft.MorseMessenger.recieve;
+
 import com.kopysoft.MorseMessenger.Defines;
 import com.kopysoft.MorseMessenger.StringMap;
 
@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.os.Vibrator;
 import android.util.Log;
 
 /** How all tones will be played
@@ -45,26 +46,31 @@ public class PlayMessage extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String Message = intent.getExtras().getString("message").toUpperCase();
-		int Speed = intent.getExtras().getInt("speed", 75);
+		int delay = intent.getExtras().getInt("speed", 75);//tone
+		int tone = intent.getExtras().getInt("tone", ToneGenerator.TONE_DTMF_0);
+		boolean vib = intent.getExtras().getBoolean("viberate", false);
+		int vibSpeed = intent.getExtras().getInt("viberateSpeed", 100);
 		if(printDebugMessages) Log.d(TAG, Message);
 
 		try{
-			playMessage(Message, Speed, 100);
+			if(!vib)
+				playMessageSound(Message, delay, tone, 100);
+			else
+				playMessageVib(Message, vibSpeed, context);
 		} catch( Exception e){
 			Log.d(TAG, e.toString());
 		}
 	}
-
-	private void playMessage(String message, int delay, int volume) throws InterruptedException{
-		ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,volume);
+	
+	private void playMessageVib(String message, int delay, Context context) throws InterruptedException{
+		Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 		char[] charMessage = message.toCharArray();
 		StringMap map = new StringMap();
 		int timeToPlay = 0;
 
-		Log.d(TAG, Character.toString((char)charMessage[0]));
-
 		for(int i = 0; i < charMessage.length; i++){
 			String charToSend = map.getVal(Character.toString((char)charMessage[i]));
+			if(printDebugMessages) Log.d(TAG, "Message[" + i + "]: " + charMessage[i]);
 			if(charToSend != null){
 				byte[] brokenString = charToSend.getBytes();
 				for(int j = 0; j < brokenString.length; j++){
@@ -74,21 +80,55 @@ public class PlayMessage extends BroadcastReceiver {
 					} else if(((char)brokenString[j]) == '-') {
 						timeToPlay = delay * 3;
 					} else if(((char)brokenString[j]) == ' ') {
-						timeToPlay = delay * 6;
+						timeToPlay = delay * 2;	//Will add up to 7
+					}
+
+					if(((char)brokenString[j]) != ' '){
+						vib.vibrate(timeToPlay);
+					} 
+
+					Thread.sleep(timeToPlay);
+					vib.cancel();
+					Thread.sleep(delay);
+				}
+				Thread.sleep(delay * 3);
+			}
+		}
+	}
+
+	private void playMessageSound(String message, int delay, int tone, int volume) throws InterruptedException{
+		ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,volume);
+		char[] charMessage = message.toCharArray();
+		StringMap map = new StringMap();
+		int timeToPlay = 0;
+
+		for(int i = 0; i < charMessage.length; i++){
+			String charToSend = map.getVal(Character.toString((char)charMessage[i]));
+			if(printDebugMessages) Log.d(TAG, "Message[" + i + "]: " + charMessage[i]);
+			if(charToSend != null){
+				byte[] brokenString = charToSend.getBytes();
+				for(int j = 0; j < brokenString.length; j++){
+
+					if(((char)brokenString[j]) == '.'){
+						timeToPlay = delay;
+					} else if(((char)brokenString[j]) == '-') {
+						timeToPlay = delay * 3;
+					} else if(((char)brokenString[j]) == ' ') {
+						timeToPlay = delay * 2;	//Will add up to 7
 					}
 
 					if(((char)brokenString[j]) == ' '){
-						tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, delay);
+						//tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, timeToPlay);
 					} else {
-						tg.startTone(ToneGenerator.TONE_DTMF_0, timeToPlay);
+						tg.startTone(tone, timeToPlay);
 					}
 
 					Thread.sleep(timeToPlay);
-
-					tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, delay);
-
+					//tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, delay);
 					Thread.sleep(delay);
 				}
+				//tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, delay * 3);
+				Thread.sleep(delay * 3);
 			}
 		}
 	}

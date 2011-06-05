@@ -3,18 +3,22 @@
 	android:versionCode="1"
 	android:versionName="1.0" package="com.kopysoft.MorseMessenger">
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name="mainUI" android:label="@string/app_name">
+	<application android:icon="@drawable/icon" 
+		android:label="@string/app_name">
+		
+		<activity android:name="MorseMessenger" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
 		
-		<receiver android:process=":remote" android:name="recieve.PlayMessage"
+		<activity android:name="Preferences" />
+		
+		<receiver android:process=":remote" android:name=".recieve.PlayMessage"
 			android:enabled="true" />
 		
-		<receiver android:name="recieve.SMS">
+		<receiver android:name=".recieve.SMS">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
@@ -22,4 +26,6 @@
 
 	</application>
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.VIBRATE"/>
+ 	<uses-sdk android:minSdkVersion="7" />
 </manifest>

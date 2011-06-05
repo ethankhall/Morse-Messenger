@@ -7,9 +7,25 @@
 	<Button android:text="Play" android:id="@+id/button1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:onClick="onClick" />
+	<Button android:text="Viberate" android:id="@+id/button2"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:onClick="onClick" />
 	<TextView android:text="Speed:" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 	<SeekBar android:id="@+id/seekBar1" android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:max="150"
-		android:progress="75" />
+		android:layout_width="match_parent" android:max="110"
+		android:progress="65" android:padding="5dip"/>
+
+	<TextView android:text="Viberate Speed: " android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<SeekBar android:id="@+id/seekBar2" android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:max="110"
+		android:progress="75" android:padding="5dip"/>
+		
+				
+	<TextView android:text="Tone: " android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<SeekBar android:id="@+id/seekBar3" android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:max="15"
+		android:progress="7" android:padding="5dip"/>
 </LinearLayout>
