@@ -50,7 +50,7 @@ public class PreferenceGetter {
 	 */
 	public boolean getPlayBody(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
-		return app_preferences.getBoolean("playBody", true);
+		return app_preferences.getBoolean("playBody", false);
 	}
 	
 	/** Method for getPlaySender()
@@ -64,7 +64,7 @@ public class PreferenceGetter {
 	 */
 	public boolean getPlaySender(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
-		return app_preferences.getBoolean("playSender", true);
+		return app_preferences.getBoolean("playSender", false);
 	}
 	
 	/** Method for getMorseSpeed()

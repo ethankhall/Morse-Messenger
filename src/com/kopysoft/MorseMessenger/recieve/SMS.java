@@ -56,19 +56,34 @@ public class SMS extends BroadcastReceiver {
 
 			String body = sms.getMessageBody().toString();
 			String address = sms.getOriginatingAddress();
+			String message = "";
 
-			messages += "SMS from " + address + " :\n";                    
-			messages += body + "\n";
+			if(pg.getPlaySender())
+				message += address;
+			
+			if(pg.getPlayBody()){
+				if(message.length() != 0)
+					message += ": ";
+				message += body;
+			}
+			
 			Log.d(Defines.TAG, messages);
 			
 			Intent runIntent = new Intent().setClass(context, 
 					com.kopysoft.MorseMessenger.recieve.PlayMessage.class);
-	    	runIntent.putExtra("message", body);
+	    	runIntent.putExtra("message", message);
 	    	runIntent.putExtra("speed", pg.getMorseSpeed());
 	    	runIntent.putExtra("viberateSpeed",  pg.getMorseSpeedViberate());
 	    	if (isViberate(context))
 	    		runIntent.putExtra("viberate", true);
-	    	context.sendBroadcast(runIntent);
+	    	else
+	    		runIntent.putExtra("viberate", false);
+	    	
+	    	try {
+				Thread.sleep(1500);
+				context.startService(runIntent);
+			} catch (InterruptedException e) {
+			}
 		}
 	}
 	

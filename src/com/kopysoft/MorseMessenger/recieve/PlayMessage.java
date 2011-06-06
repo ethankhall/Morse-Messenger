@@ -23,10 +23,7 @@
 
 package com.kopysoft.MorseMessenger.recieve;
 
-import com.kopysoft.MorseMessenger.Defines;
-import com.kopysoft.MorseMessenger.StringMap;
-
-import android.content.BroadcastReceiver;
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -34,17 +31,25 @@ import android.media.ToneGenerator;
 import android.os.Vibrator;
 import android.util.Log;
 
+import com.kopysoft.MorseMessenger.Defines;
+import com.kopysoft.MorseMessenger.StringMap;
+
 /** How all tones will be played
  * 
  * @author Ethan Hall
  */
-public class PlayMessage extends BroadcastReceiver {
+public class PlayMessage extends IntentService {
 
 	private static final String TAG = Defines.TAG + " - PlayMessage";
 	private static final boolean printDebugMessages = Defines.printDebugMessages;
 
+	public PlayMessage() {
+		super("PlayMessage");
+	}
+
+
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	protected void onHandleIntent(Intent intent) {
 		String Message = intent.getExtras().getString("message").toUpperCase();
 		int delay = intent.getExtras().getInt("speed", 75);//tone
 		int tone = intent.getExtras().getInt("tone", ToneGenerator.TONE_DTMF_0);
@@ -56,12 +61,12 @@ public class PlayMessage extends BroadcastReceiver {
 			if(!vib)
 				playMessageSound(Message, delay, tone, 100);
 			else
-				playMessageVib(Message, vibSpeed, context);
+				playMessageVib(Message, vibSpeed, getBaseContext());
 		} catch( Exception e){
 			Log.d(TAG, e.toString());
 		}
 	}
-	
+
 	private void playMessageVib(String message, int delay, Context context) throws InterruptedException{
 		Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 		char[] charMessage = message.toCharArray();

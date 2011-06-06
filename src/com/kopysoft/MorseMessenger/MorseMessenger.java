@@ -115,7 +115,7 @@ public class MorseMessenger extends Activity {
     	runIntent.putExtra("viberateSpeed", vibSpeed);
     	if(view.getId() == R.id.button2)
     		runIntent.putExtra("viberate", true);
-		getApplicationContext().sendBroadcast(runIntent);
+		getApplicationContext().startService(runIntent);
     	
     }
 }
