@@ -58,6 +58,7 @@ public class PlayMessage extends IntentService {
 		if(printDebugMessages) Log.d(TAG, Message);
 
 		try{
+			Thread.sleep(3000);
 			if(!vib)
 				playMessageSound(Message, delay, tone, 100);
 			else

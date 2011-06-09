@@ -2,26 +2,40 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="SMS Messenger Settings">
 		<CheckBoxPreference 
+			android:key = "enableSMS"
+			android:title="SMS"
+			android:summary="Enable SMS reading" 
+			android:defaultValue="False"/>
+		<CheckBoxPreference 
 			android:key = "playBody"
 			android:title="Body"
-			android:summary="Morse out message body" />
+			android:summary="Morse out message body" 
+			android:dependency="enableSMS"
+			android:defaultValue="False"/>
 		<CheckBoxPreference 
 			android:key = "playSender"
 			android:title = "Sender"
-			android:summary = "Morse out sender" />
+			android:summary = "Morse out sender"
+			android:dependency="enableSMS"
+			android:defaultValue="False" />
 		<com.kopysoft.MorseMessenger.SeekBarPreference android:key="Volume"
 	        android:title="Volume"
 	        android:defaultValue="100"
 	        android:max="100"
-	        android:text="Lower/Higher" />
+	        android:text="Lower/Higher" 
+	        android:dependency="enableSMS"/>
 	    <CheckBoxPreference 
 			android:key = "playInViberate"
 			android:title = "Viberate"
-			android:summary = "Play when in viberate mode" />
+			android:summary = "Play when in viberate mode" 
+			android:dependency="enableSMS"
+			android:defaultValue="False"/>
 		<CheckBoxPreference 
 			android:key = "playInNormal"
 			android:title = "Normal"
-			android:summary = "Play when in normal" />
+			android:summary = "Play when in normal" 
+			android:dependency="enableSMS"
+			android:defaultValue="False"/>
 	</PreferenceCategory>
     <PreferenceCategory android:title="Morse Code Settings">
 	    <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseSpeedSound"

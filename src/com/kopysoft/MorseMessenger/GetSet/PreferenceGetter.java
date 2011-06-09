@@ -48,7 +48,7 @@ public class PreferenceGetter {
 	 * </ul>
 	 * 
 	 */
-	public boolean getPlayBody(){
+	public boolean isPlayBody(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playBody", false);
 	}
@@ -62,7 +62,7 @@ public class PreferenceGetter {
 	 * </ul>
 	 * 
 	 */
-	public boolean getPlaySender(){
+	public boolean isPlaySender(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playSender", false);
 	}
@@ -114,7 +114,7 @@ public class PreferenceGetter {
 		return ToneArray[getConvert];
 	}
 	
-	/** Method for getPlayInVib()
+	/** Method for isPlayInVib()
 	 * 
 	 * @return boolean 
 	 * <ul>
@@ -123,12 +123,12 @@ public class PreferenceGetter {
 	 * </ul>
 	 * 
 	 */
-	public boolean getPlayInVib(){
+	public boolean isPlayInVib(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playInViberate", false);
 	}
 	
-	/** Method for getPlayInNrom()
+	/** Method for isPlayInNrom()
 	 * 
 	 * @return boolean 
 	 * <ul>
@@ -137,9 +137,18 @@ public class PreferenceGetter {
 	 * </ul>
 	 * 
 	 */
-	public boolean getPlayInNorm(){
+	public boolean isPlayInNorm(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playInNormal", false);
+	}
+	
+	/** Method isSMSEnabled()
+	 * 
+	 * @return True if SMS reading is enabled, False otherwise.
+	 */
+	public boolean isSMSEnabled(){
+		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
+		return app_preferences.getBoolean("enableSMS", false);
 	}
 	
 

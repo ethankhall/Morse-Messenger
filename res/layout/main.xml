@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<EditText android:text="SOS" android:layout_height="wrap_content"
-		android:id="@+id/editText1" android:layout_width="match_parent"/>
-	<Button android:text="Play" android:id="@+id/button1"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:onClick="onClick" />
-	<Button android:text="Viberate" android:id="@+id/button2"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:onClick="onClick" />
-	<TextView android:text="Speed:" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-	<SeekBar android:id="@+id/seekBar1" android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:max="110"
-		android:progress="65" android:padding="5dip"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads">
+	<ScrollView android:id="@+id/scroller" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" layout_alignParentTop="true">
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<EditText android:text="SOS" android:layout_height="wrap_content"
+				android:id="@+id/editText1" android:layout_width="match_parent" />
+			<Button android:text="Play" android:id="@+id/button1"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:onClick="onClick" />
+			<Button android:text="Viberate" android:id="@+id/button2"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:onClick="onClick" android:visibility="gone" />
+			<TextView android:text="Speed:" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+			<SeekBar android:id="@+id/seekBar1" android:layout_height="wrap_content"
+				android:layout_width="match_parent" android:max="110"
+				android:progress="65" android:padding="5dip" />
 
-	<TextView android:text="Viberate Speed: " android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-	<SeekBar android:id="@+id/seekBar2" android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:max="110"
-		android:progress="75" android:padding="5dip"/>
-		
-				
-	<TextView android:text="Tone: " android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-	<SeekBar android:id="@+id/seekBar3" android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:max="15"
-		android:progress="7" android:padding="5dip"/>
-</LinearLayout>
+			<TextView android:text="Tone: " android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+			<SeekBar android:id="@+id/seekBar3" android:layout_height="wrap_content"
+				android:layout_width="match_parent" android:max="15"
+				android:progress="7" android:padding="5dip" />
+			<WebView android:layout_height="wrap_content" android:text=""
+				android:id="@+id/singALong" android:layout_width="match_parent"
+				android:visibility="invisible" android:enabled="false" />
+		</LinearLayout>
+	</ScrollView>
+	<LinearLayout android:layout_width="fill_parent"
+		android:id="@+id/ad_layout" android:layout_height="wrap_content"
+		android:gravity="bottom" android:layout_alignParentBottom="true"
+		android:layout_alignBottom="@id/scroller">
+
+		<com.google.ads.AdView android:id="@+id/adView"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			ads:adUnitId="a14deab6e6a662f" ads:adSize="BANNER"
+			android:layout_below="@id/scroller" android:gravity="bottom" />
+	</LinearLayout>
+</RelativeLayout>

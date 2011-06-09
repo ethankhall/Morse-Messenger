@@ -37,6 +37,8 @@ import com.kopysoft.MorseMessenger.GetSet.PreferenceGetter;
 public class SMS extends BroadcastReceiver {
 
 	public static final String SMS_EXTRA_NAME = "pdus";
+	private static final String TAG = Defines.TAG + " - SMS";
+	private static final boolean printDebugMessages = Defines.printDebugMessages;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -46,7 +48,10 @@ public class SMS extends BroadcastReceiver {
 		PreferenceGetter pg = new PreferenceGetter(context);
 
 		if(!playMessage(context)) return;
-		
+		if(!pg.isSMSEnabled()){
+			return;
+		}
+
 		// Get received SMS array
 		Object[] smsExtra = (Object[]) extras.get( SMS_EXTRA_NAME );
 
@@ -58,64 +63,60 @@ public class SMS extends BroadcastReceiver {
 			String address = sms.getOriginatingAddress();
 			String message = "";
 
-			if(pg.getPlaySender())
+			if(pg.isPlaySender())
 				message += address;
-			
-			if(pg.getPlayBody()){
+
+			if(pg.isPlayBody()){
 				if(message.length() != 0)
 					message += ": ";
 				message += body;
 			}
-			
-			Log.d(Defines.TAG, messages);
-			
+
+			if(printDebugMessages) Log.d(TAG, messages);
+
 			Intent runIntent = new Intent().setClass(context, 
 					com.kopysoft.MorseMessenger.recieve.PlayMessage.class);
-	    	runIntent.putExtra("message", message);
-	    	runIntent.putExtra("speed", pg.getMorseSpeed());
-	    	runIntent.putExtra("viberateSpeed",  pg.getMorseSpeedViberate());
-	    	if (isViberate(context))
-	    		runIntent.putExtra("viberate", true);
-	    	else
-	    		runIntent.putExtra("viberate", false);
-	    	
-	    	try {
-				Thread.sleep(1500);
-				context.startService(runIntent);
-			} catch (InterruptedException e) {
-			}
+			runIntent.putExtra("message", message);
+			runIntent.putExtra("speed", pg.getMorseSpeed());
+			runIntent.putExtra("viberateSpeed",  pg.getMorseSpeedViberate());
+			if (isViberate(context))
+				runIntent.putExtra("viberate", true);
+			else
+				runIntent.putExtra("viberate", false);
+
+			context.startService(runIntent);
 		}
 	}
-	
+
 	private boolean playMessage(Context context){
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		//RINGER_MODE_NORMAL, RINGER_MODE_SILENT, or RINGER_MODE_VIBRATE.
 		int ringerStatus = audioManager.getRingerMode();
 		//boolean shouldViberate = audioManager.shouldVibrate(AudioManager.VIBRATE_TYPE_RINGER);
 		boolean returnValue = false;
-		
+
 		PreferenceGetter pg = new PreferenceGetter(context);
-		boolean inNorm = pg.getPlayInNorm();
-		boolean inViberate = pg.getPlayInVib();
+		boolean inNorm = pg.isPlayInNorm();
+		boolean inViberate = pg.isPlayInVib();
 		switch(ringerStatus){
 		case(AudioManager.RINGER_MODE_NORMAL):
 			if(inNorm) returnValue = true;
-			//if(!returnValue && shouldViberate) returnValue = true;
-			break;
+		//if(!returnValue && shouldViberate) returnValue = true;
+		break;
 		case(AudioManager.RINGER_MODE_SILENT):
 			returnValue = false;
-			break;
+		break;
 		case(AudioManager.RINGER_MODE_VIBRATE):
 			if(inViberate) returnValue = true;
-			//if(!returnValue && shouldViberate) returnValue = true;
-			break;
+		//if(!returnValue && shouldViberate) returnValue = true;
+		break;
 		default:
 			break;
 		}
-		
+
 		return returnValue;
 	}
-	
+
 	private boolean isViberate(Context context){
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		int ringerStatus = audioManager.getRingerMode();
@@ -124,19 +125,19 @@ public class SMS extends BroadcastReceiver {
 		switch(ringerStatus){
 		case(AudioManager.RINGER_MODE_NORMAL):
 			returnValue = false;
-			//if(!returnValue && shouldViberate) returnValue = true;
-			break;
+		//if(!returnValue && shouldViberate) returnValue = true;
+		break;
 		case(AudioManager.RINGER_MODE_SILENT):
 			returnValue = false;
-			break;
+		break;
 		case(AudioManager.RINGER_MODE_VIBRATE):
 			returnValue = true;
-			//if(!returnValue && shouldViberate) returnValue = true;
-			break;
+		//if(!returnValue && shouldViberate) returnValue = true;
+		break;
 		default:
 			break;
 		}
-		
+
 		return returnValue;
 	}
 }
