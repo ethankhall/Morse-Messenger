@@ -15,7 +15,12 @@
 		
 		<activity android:name="Preferences" />
 		
+		<activity android:name="Translate" />
+		
+		<activity android:name="ViewTranslations" />
+		
 		<service android:name=".recieve.PlayMessage" android:enabled="true" />
+		
 		
 		<receiver android:name=".recieve.SMS">
 			<intent-filter>

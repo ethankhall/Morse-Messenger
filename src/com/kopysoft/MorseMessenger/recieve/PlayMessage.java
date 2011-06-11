@@ -68,6 +68,17 @@ public class PlayMessage extends IntentService {
 		}
 	}
 
+	/**	Method of playMessageVib(String message, int delay, Context context) throws InterruptedException
+	 * 
+	 * Plays a message out on the vibrator, on general you should set the delay to be 3 times that
+	 * 	of the sound delay.
+	 * 
+	 * @author Ethan Hall
+	 * @param message	STring that will be viberated out
+	 * @param delay		Base delay in MS
+	 * @param context	Context of this service
+	 * @throws InterruptedException
+	 */
 	private void playMessageVib(String message, int delay, Context context) throws InterruptedException{
 		Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 		char[] charMessage = message.toCharArray();
@@ -102,6 +113,17 @@ public class PlayMessage extends IntentService {
 		}
 	}
 
+	/**	Method of playMessageSound(String message, int delay, int tone, int volume) throws InterruptedException
+	 * 
+	 * Plays a message on the speaker using ToneGenerator.
+	 * 
+	 * @author Ethan Hall
+	 * @param message	STring that will be vibrated out
+	 * @param delay		Base delay in MS
+	 * @param tone		a {@link}AudioManager define
+	 * @param volume	Percentage from 0 - 100 of the volume
+	 * @throws InterruptedException
+	 */
 	private void playMessageSound(String message, int delay, int tone, int volume) throws InterruptedException{
 		ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,volume);
 		char[] charMessage = message.toCharArray();
@@ -123,17 +145,13 @@ public class PlayMessage extends IntentService {
 						timeToPlay = delay * 2;	//Will add up to 7
 					}
 
-					if(((char)brokenString[j]) == ' '){
-						//tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, timeToPlay);
-					} else {
+					if(((char)brokenString[j]) != ' '){
 						tg.startTone(tone, timeToPlay);
-					}
+					} 
 
 					Thread.sleep(timeToPlay);
-					//tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, delay);
 					Thread.sleep(delay);
 				}
-				//tg.startTone(ToneGenerator.TONE_CDMA_SIGNAL_OFF, delay * 3);
 				Thread.sleep(delay * 3);
 			}
 		}

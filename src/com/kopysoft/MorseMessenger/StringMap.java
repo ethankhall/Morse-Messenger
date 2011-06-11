@@ -100,7 +100,7 @@ public class StringMap {
 		if(m.containsKey(value))
 			return m.get(value);
 		else
-			return null;
+			return " ";
 	}
 	
 	/** Description of getVal(char value)
@@ -112,6 +112,6 @@ public class StringMap {
 		if(m.containsKey(Character.toString(value)))
 			return m.get(value);
 		else
-			return null;
+			return " ";
 	}
 }
