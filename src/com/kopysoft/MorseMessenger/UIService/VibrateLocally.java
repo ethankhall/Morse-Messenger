@@ -1,5 +1,28 @@
 package com.kopysoft.MorseMessenger.UIService;
 
+/**
+ * 			Copyright (C) 2011 by Ethan Hall
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ * 	in the Software without restriction, including without limitation the rights
+ * 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * 	copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ *  
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,7 +40,7 @@ import com.kopysoft.MorseMessenger.Defines;
 import com.kopysoft.MorseMessenger.R;
 import com.kopysoft.MorseMessenger.StringMap;
 
-public class ViberateLocally extends AsyncTask<Object, String, Void> {
+public class VibrateLocally extends AsyncTask<Object, String, Void> {
 	
 	private static String TAG = Defines.TAG + " - PlayLocally";
 	private static final boolean printDebugMessages = Defines.printDebugMessages;
@@ -26,7 +49,7 @@ public class ViberateLocally extends AsyncTask<Object, String, Void> {
 	private Activity mActicity = null;
 	private String mMessage = null;
 	
-	public ViberateLocally(Activity activity){
+	public VibrateLocally(Activity activity){
 		mActicity = activity;
 	}
 
@@ -39,8 +62,8 @@ public class ViberateLocally extends AsyncTask<Object, String, Void> {
 
 		speed = (150 - (30 + speedBar.getProgress())) * 3;	//make it 3 times longer
 		
-		Button viberateButton = (Button)mActicity.findViewById(R.id.viberateMorse);
-		viberateButton.setText("Stop");
+		Button VibrateButton = (Button)mActicity.findViewById(R.id.vibrateMorse);
+		VibrateButton.setText("Stop");
 		Button playButton = (Button)mActicity.findViewById(R.id.playMorse);
 		playButton.setEnabled(false);
 		Button translateButton = (Button)mActicity.findViewById(R.id.translateMorse);
@@ -48,6 +71,8 @@ public class ViberateLocally extends AsyncTask<Object, String, Void> {
 		EditText messageView = (EditText) mActicity.findViewById(R.id.messageInput);
 		mMessage = messageView.getText().toString();
 		messageView.setEnabled(false);
+		LinearLayout seekbars = (LinearLayout)mActicity.findViewById(R.id.SeekbarView);
+		seekbars.setVisibility(View.GONE);
 	}
 
 	private String getHTML(int index, String[] message, char[] messageText, boolean enableBold){
@@ -85,8 +110,8 @@ public class ViberateLocally extends AsyncTask<Object, String, Void> {
 		singALong.setVisibility(WebView.INVISIBLE);
 		singALong.loadData("<br/><br/>", "text/html", "UTF-8");
 		
-		Button viberateButton = (Button)mActicity.findViewById(R.id.viberateMorse);
-		viberateButton.setText("Viberate");
+		Button VibrateButton = (Button)mActicity.findViewById(R.id.vibrateMorse);
+		VibrateButton.setText("Vibrate");
 		Button playButton = (Button)mActicity.findViewById(R.id.playMorse);
 		playButton.setEnabled(true);
 		Button translateButton = (Button)mActicity.findViewById(R.id.translateMorse);
@@ -95,6 +120,7 @@ public class ViberateLocally extends AsyncTask<Object, String, Void> {
 		seekbars.setVisibility(View.VISIBLE);
 		EditText messageView = (EditText) mActicity.findViewById(R.id.messageInput);
 		messageView.setEnabled(true);
+		
 	}
 	
 	protected void  onCancelled(Void param){
@@ -102,8 +128,8 @@ public class ViberateLocally extends AsyncTask<Object, String, Void> {
 		singALong.setVisibility(WebView.INVISIBLE);
 		singALong.loadData("<br/><br/>", "text/html", "UTF-8");
 		
-		Button viberateButton = (Button)mActicity.findViewById(R.id.viberateMorse);
-		viberateButton.setText("Viberate");
+		Button VibrateButton = (Button)mActicity.findViewById(R.id.vibrateMorse);
+		VibrateButton.setText("Vibrate");
 		Button playButton = (Button)mActicity.findViewById(R.id.playMorse);
 		playButton.setEnabled(true);
 		Button translateButton = (Button)mActicity.findViewById(R.id.translateMorse);

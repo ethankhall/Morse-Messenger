@@ -25,9 +25,9 @@
 	        android:text="Lower/Higher" 
 	        android:dependency="enableSMS"/>
 	    <CheckBoxPreference 
-			android:key = "playInViberate"
-			android:title = "Viberate"
-			android:summary = "Play when in viberate mode" 
+			android:key = "playInVibrate"
+			android:title = "Vibrate"
+			android:summary = "Play when in vibrate mode" 
 			android:dependency="enableSMS"
 			android:defaultValue="False"/>
 		<CheckBoxPreference 
@@ -39,9 +39,16 @@
 	</PreferenceCategory>
     <PreferenceCategory android:title="Morse Code Settings">
 	    <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseSpeedSound"
-	        android:title="Speed"
+	        android:title="Speed (Sound)"
 	        android:summary="How fast to beep"
 	        android:defaultValue="65"
+	        android:max="110"
+	        android:text="Slower/Faster"
+	        />
+	     <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseSpeedVib"
+	        android:title="Speed (Vibrate)"
+	        android:summary="How fast to viberate"
+	        android:defaultValue="75"
 	        android:max="110"
 	        android:text="Slower/Faster"
 	        />
@@ -52,16 +59,11 @@
 	        android:max="15"
 	        android:text="Lower/Higher"
 	        />
-	    <com.kopysoft.MorseMessenger.SeekBarPreference android:key="MorseSpeedVib"
-	        android:title="Speed"
-	        android:summary="How fast to viberate"
-	        android:defaultValue="75"
-	        android:max="110"
-	        android:text="Slower/Faster"
-	        />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Other">
 		<Preference android:title="Send e-mail to developer"
 				android:key="emailDev" />
+		<Preference android:title="Read ULA"
+				android:key="ULA" android:defaultValue="1" />
 	</PreferenceCategory>
 </PreferenceScreen>

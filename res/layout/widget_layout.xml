@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/scrollerView0" layout_alignParentTop="true">
+	<ImageView android:src="@drawable/ic_widget_enable"
+		android:id="@+id/imageButton" android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:layout_gravity="center" />
+</FrameLayout>

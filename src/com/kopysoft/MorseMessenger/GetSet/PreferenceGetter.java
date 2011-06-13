@@ -78,12 +78,12 @@ public class PreferenceGetter {
 		return Offset - (app_preferences.getInt("MorseSpeed", 65) + 30);
 	}
 	
-	/** Method for getMorseSpeedViberate()
+	/** Method for getMorseSpeedVibrate()
 	 * 
 	 * @return int of the speed
 	 * 
 	 */
-	public int getMorseSpeedViberate(){
+	public int getMorseSpeedVibrate(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		final int Offset = 150;
 		return Offset - (app_preferences.getInt("MorseSpeedVib",75) + 30);
@@ -125,7 +125,7 @@ public class PreferenceGetter {
 	 */
 	public boolean isPlayInVib(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
-		return app_preferences.getBoolean("playInViberate", false);
+		return app_preferences.getBoolean("playInVibrate", false);
 	}
 	
 	/** Method for isPlayInNrom()
@@ -149,6 +149,26 @@ public class PreferenceGetter {
 	public boolean isSMSEnabled(){
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("enableSMS", false);
+	}
+	
+	/** Method isWidgetEnabled()
+	 * 
+	 * @return True is widget is enabled, False otherwise
+	 */
+	public boolean isWidgetEnabled(){
+		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
+		return app_preferences.getBoolean("widgetEnable", isSMSEnabled());
+	}
+	
+	/** Method isWidgetEnabled()
+	 * 
+	 * @return True is widget is enabled, False otherwise
+	 */
+	public void setWidgetEnabled(boolean setEnabled){
+		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
+		SharedPreferences.Editor editor = app_preferences.edit();
+		editor.putBoolean("widgetEnable", setEnabled);
+		editor.commit();
 	}
 	
 

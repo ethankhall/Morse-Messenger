@@ -36,6 +36,19 @@ public class Preferences extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 		
+		//ULA
+		Preference ulaPref = (Preference) findPreference("ULA");
+		ulaPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				Intent ULAIntent = new Intent(getApplicationContext(),
+						com.kopysoft.MorseMessenger.ULA.class);
+				startActivity(ULAIntent);
+				return true;
+			}
+			
+		});
 		//---- email me
 		Preference emailMe = (Preference) findPreference("emailDev");
 		emailMe.setOnPreferenceClickListener(new OnPreferenceClickListener() {

@@ -4,7 +4,7 @@
 	android:id="@+id/scrollerView0" layout_alignParentTop="true">
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<EditText android:text="SOS this is a really long field to test with!"
+		<EditText android:text=""
 			android:layout_height="wrap_content" android:id="@+id/messageInput"
 			android:layout_width="match_parent" />
 		<TableLayout android:layout_width="fill_parent"
@@ -16,7 +16,7 @@
 				<Button android:text="Play" android:id="@+id/playMorse"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:onClick="onClick" android:layout_column="0" />
-				<Button android:text="Viberate" android:id="@+id/viberateMorse"
+				<Button android:text="Vibrate" android:id="@+id/vibrateMorse"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:onClick="onClick" android:layout_column="1" />
 

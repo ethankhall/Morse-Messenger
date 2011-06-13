@@ -51,6 +51,9 @@ public class SMS extends BroadcastReceiver {
 		if(!pg.isSMSEnabled()){
 			return;
 		}
+		if(!pg.isWidgetEnabled()){
+			return;
+		}
 
 		// Get received SMS array
 		Object[] smsExtra = (Object[]) extras.get( SMS_EXTRA_NAME );
@@ -78,11 +81,11 @@ public class SMS extends BroadcastReceiver {
 					com.kopysoft.MorseMessenger.recieve.PlayMessage.class);
 			runIntent.putExtra("message", message);
 			runIntent.putExtra("speed", pg.getMorseSpeed());
-			runIntent.putExtra("viberateSpeed",  pg.getMorseSpeedViberate());
-			if (isViberate(context))
-				runIntent.putExtra("viberate", true);
+			runIntent.putExtra("VibrateSpeed",  pg.getMorseSpeedVibrate());
+			if (isVibrate(context))
+				runIntent.putExtra("Vibrate", true);
 			else
-				runIntent.putExtra("viberate", false);
+				runIntent.putExtra("Vibrate", false);
 
 			context.startService(runIntent);
 		}
@@ -92,23 +95,23 @@ public class SMS extends BroadcastReceiver {
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		//RINGER_MODE_NORMAL, RINGER_MODE_SILENT, or RINGER_MODE_VIBRATE.
 		int ringerStatus = audioManager.getRingerMode();
-		//boolean shouldViberate = audioManager.shouldVibrate(AudioManager.VIBRATE_TYPE_RINGER);
+		//boolean shouldVibrate = audioManager.shouldVibrate(AudioManager.VIBRATE_TYPE_RINGER);
 		boolean returnValue = false;
 
 		PreferenceGetter pg = new PreferenceGetter(context);
 		boolean inNorm = pg.isPlayInNorm();
-		boolean inViberate = pg.isPlayInVib();
+		boolean inVibrate = pg.isPlayInVib();
 		switch(ringerStatus){
 		case(AudioManager.RINGER_MODE_NORMAL):
 			if(inNorm) returnValue = true;
-		//if(!returnValue && shouldViberate) returnValue = true;
+		//if(!returnValue && shouldVibrate) returnValue = true;
 		break;
 		case(AudioManager.RINGER_MODE_SILENT):
 			returnValue = false;
 		break;
 		case(AudioManager.RINGER_MODE_VIBRATE):
-			if(inViberate) returnValue = true;
-		//if(!returnValue && shouldViberate) returnValue = true;
+			if(inVibrate) returnValue = true;
+		//if(!returnValue && shouldVibrate) returnValue = true;
 		break;
 		default:
 			break;
@@ -117,7 +120,7 @@ public class SMS extends BroadcastReceiver {
 		return returnValue;
 	}
 
-	private boolean isViberate(Context context){
+	private boolean isVibrate(Context context){
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		int ringerStatus = audioManager.getRingerMode();
 		boolean returnValue = false;
@@ -125,14 +128,14 @@ public class SMS extends BroadcastReceiver {
 		switch(ringerStatus){
 		case(AudioManager.RINGER_MODE_NORMAL):
 			returnValue = false;
-		//if(!returnValue && shouldViberate) returnValue = true;
+		//if(!returnValue && shouldVibrate) returnValue = true;
 		break;
 		case(AudioManager.RINGER_MODE_SILENT):
 			returnValue = false;
 		break;
 		case(AudioManager.RINGER_MODE_VIBRATE):
 			returnValue = true;
-		//if(!returnValue && shouldViberate) returnValue = true;
+		//if(!returnValue && shouldVibrate) returnValue = true;
 		break;
 		default:
 			break;

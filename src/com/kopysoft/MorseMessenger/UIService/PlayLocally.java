@@ -44,8 +44,8 @@ public class PlayLocally extends AsyncTask<String, String, Void> {
 
 		Button playButton = (Button)mActicity.findViewById(R.id.playMorse);
 		playButton.setText("Stop");
-		Button viberateButton = (Button)mActicity.findViewById(R.id.viberateMorse);
-		viberateButton.setEnabled(false);
+		Button vibrateButton = (Button)mActicity.findViewById(R.id.vibrateMorse);
+		vibrateButton.setEnabled(false);
 		Button translateButton = (Button)mActicity.findViewById(R.id.translateMorse);
 		translateButton.setEnabled(false);
 		LinearLayout seekbars = (LinearLayout)mActicity.findViewById(R.id.SeekbarView);
@@ -92,8 +92,8 @@ public class PlayLocally extends AsyncTask<String, String, Void> {
 
 		Button playButton = (Button)mActicity.findViewById(R.id.playMorse);
 		playButton.setText("Play");
-		Button viberateButton = (Button)mActicity.findViewById(R.id.viberateMorse);
-		viberateButton.setEnabled(true);
+		Button vibrateButton = (Button)mActicity.findViewById(R.id.vibrateMorse);
+		vibrateButton.setEnabled(true);
 		Button translateButton = (Button)mActicity.findViewById(R.id.translateMorse);
 		translateButton.setEnabled(true);
 		LinearLayout seekbars = (LinearLayout)mActicity.findViewById(R.id.SeekbarView);
