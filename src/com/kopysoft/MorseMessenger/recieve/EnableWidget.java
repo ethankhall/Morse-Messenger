@@ -72,11 +72,15 @@ public class EnableWidget extends AppWidgetProvider {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		super.onReceive(context, intent);
+		Intent sendIntent = new Intent(context, com.kopysoft.MorseMessenger.recieve.EnableWidget.class);
+		sendIntent.setAction(UPDATE_ICON);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, sendIntent, 0);
+        
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        
 		if(intent.getAction().compareTo(UPDATE_ICON) == 0){
 			if(printDebugMessages) Log.d(TAG, "Update Icon");
-			AppWidgetManager manager = AppWidgetManager.getInstance(context);
-			RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 			
 			PreferenceGetter prefs = new PreferenceGetter(context);
 			boolean enabled = !(prefs.isWidgetEnabled());
@@ -88,8 +92,13 @@ public class EnableWidget extends AppWidgetProvider {
             }
 			
 			manager.updateAppWidget(new ComponentName(context, EnableWidget.class), views);
+		} else {
+			super.onReceive(context, intent);
 		}
+		
 		if(printDebugMessages) Log.d(TAG,intent.getAction());
+		views.setOnClickPendingIntent(R.id.imageButton, pendingIntent);
+		manager.updateAppWidget(new ComponentName(context, EnableWidget.class), views);
 	}
 	
 	/** Method onDeleted (Context context, int[] appWidgetIds)

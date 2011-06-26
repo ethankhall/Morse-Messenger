@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="HelpOptions">
+		<item>Add Widget</item>
+		<item>Remove a Punch</item>
+	</string-array>
+</resources>

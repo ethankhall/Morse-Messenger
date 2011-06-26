@@ -22,8 +22,13 @@
  */
 
 package com.kopysoft.MorseMessenger;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.kopysoft.MorseMessenger.GetSet.PreferenceGetter;
+
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -59,10 +64,23 @@ public class MorseMessenger extends TabActivity {
 	    tabHost.addTab(spec);
 
 	    tabHost.setCurrentTab(0);
+	    
+	    int versionCode = 0;
+	    try {
+			versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+		} catch (NameNotFoundException e) {
+			Log.e(TAG, "Package not found!");
+		}
 
+	    PreferenceGetter prefs = new PreferenceGetter(getApplicationContext());
+	    boolean needToDisplayULA = prefs.needToDisplayULA(versionCode);
+	    if(needToDisplayULA){
+	    	showPrefs();
+	    }
+	    
 		// Look up the AdView as a resource and load a request.
-		//AdView adView = (AdView)this.findViewById(R.id.adView);
-		//adView.loadAd(new AdRequest());
+		AdView adView = (AdView)this.findViewById(R.id.adView);
+		adView.loadAd(new AdRequest());
 	}
 
 	@Override

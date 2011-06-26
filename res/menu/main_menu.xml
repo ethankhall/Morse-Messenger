@@ -5,5 +5,5 @@
           android:title="Preferences" />
     <item android:id="@+id/help"
           android:icon="@android:drawable/ic_menu_help"
-          android:title="Help" />
+          android:title="Help" android:visible="false"/>
 </menu>

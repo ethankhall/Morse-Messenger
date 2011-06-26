@@ -30,7 +30,7 @@ import android.preference.PreferenceManager;
 
 public class PreferenceGetter {
 	Context appContext = null;
-	
+
 	/** Constructor for PreferenceGetter
 	 * 
 	 * @param appContext Application Context
@@ -52,7 +52,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playBody", false);
 	}
-	
+
 	/** Method for getPlaySender()
 	 * 
 	 * @return boolean 
@@ -66,7 +66,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playSender", false);
 	}
-	
+
 	/** Method for getMorseSpeed()
 	 * 
 	 * @return int of the speed
@@ -77,7 +77,7 @@ public class PreferenceGetter {
 		final int Offset = 150;
 		return Offset - (app_preferences.getInt("MorseSpeed", 65) + 30);
 	}
-	
+
 	/** Method for getMorseSpeedVibrate()
 	 * 
 	 * @return int of the speed
@@ -88,7 +88,7 @@ public class PreferenceGetter {
 		final int Offset = 150;
 		return Offset - (app_preferences.getInt("MorseSpeedVib",75) + 30);
 	}
-	
+
 	/** Method for getMorseTone()
 	 * 
 	 * @return int 	returns the real value from the preference
@@ -98,7 +98,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getInt("MorseTone", 7);
 	}
-	
+
 	/** Method for getMorseTone()
 	 * 
 	 * @param int	Value to convert to ToneGenerator
@@ -113,7 +113,7 @@ public class PreferenceGetter {
 				ToneGenerator.TONE_DTMF_C, ToneGenerator.TONE_DTMF_D };
 		return ToneArray[getConvert];
 	}
-	
+
 	/** Method for isPlayInVib()
 	 * 
 	 * @return boolean 
@@ -127,7 +127,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playInVibrate", false);
 	}
-	
+
 	/** Method for isPlayInNrom()
 	 * 
 	 * @return boolean 
@@ -141,7 +141,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("playInNormal", false);
 	}
-	
+
 	/** Method isSMSEnabled()
 	 * 
 	 * @return True if SMS reading is enabled, False otherwise.
@@ -150,7 +150,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("enableSMS", false);
 	}
-	
+
 	/** Method isWidgetEnabled()
 	 * 
 	 * @return True is widget is enabled, False otherwise
@@ -159,7 +159,7 @@ public class PreferenceGetter {
 		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
 		return app_preferences.getBoolean("widgetEnable", isSMSEnabled());
 	}
-	
+
 	/** Method isWidgetEnabled()
 	 * 
 	 * @return True is widget is enabled, False otherwise
@@ -170,6 +170,24 @@ public class PreferenceGetter {
 		editor.putBoolean("widgetEnable", setEnabled);
 		editor.commit();
 	}
-	
+
+	/** Method needToDisplayULA()
+	 * 
+	 * @return True if the ULA needs to be displayed
+	 */
+	public boolean needToDisplayULA(int versionNumber){
+		SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
+		int mostRecentVersion = app_preferences.getInt("mostReventVersion", 0);
+		boolean needToDisplayULA = false;
+		if(mostRecentVersion != versionNumber){
+			needToDisplayULA = true;
+			SharedPreferences.Editor editor = app_preferences.edit();
+			editor.putInt("mostReventVersion", versionNumber);
+			editor.commit();
+		}
+		
+		return needToDisplayULA;
+	}
+
 
 }
