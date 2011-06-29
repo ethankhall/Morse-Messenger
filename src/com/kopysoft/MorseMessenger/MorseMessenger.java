@@ -22,10 +22,6 @@
  */
 
 package com.kopysoft.MorseMessenger;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
-import com.kopysoft.MorseMessenger.GetSet.PreferenceGetter;
-
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -35,6 +31,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TabHost;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.kopysoft.MorseMessenger.GetSet.PreferenceGetter;
 
 public class MorseMessenger extends TabActivity {
 	/** Called when the activity is first created. */
@@ -46,41 +46,53 @@ public class MorseMessenger extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		if(printDebugMessages) Log.d(TAG, "Start");
-		
+
 		//Resources res = getResources(); // Resource object to get Drawables
-	    TabHost tabHost = getTabHost();  // The activity TabHost
-	    TabHost.TabSpec spec;  // Resusable TabSpec for each tab
-	    Intent intent;  // Reusable Intent for each tab
+		TabHost tabHost = getTabHost();  // The activity TabHost
+		TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+		Intent intent;  // Reusable Intent for each tab
 
-	    // Create an Intent to launch an Activity for the tab (to be reused)
-	    intent = new Intent().setClass(this, Translate.class);
+		// Create an Intent to launch an Activity for the tab (to be reused)
+		intent = new Intent().setClass(this, Translate.class);
 
-	    // Initialize a TabSpec for each tab and add it to the TabHost
-	    spec = tabHost.newTabSpec("tranlsate").setIndicator("Translate").setContent(intent);
-	    tabHost.addTab(spec);
-	    
-	    intent = new Intent().setClass(this, ViewTranslations.class);
-	    spec = tabHost.newTabSpec("listMorse").setIndicator("List Morse").setContent(intent);
-	    tabHost.addTab(spec);
+		// Initialize a TabSpec for each tab and add it to the TabHost
+		spec = tabHost.newTabSpec("tranlsate").setIndicator("Translate").setContent(intent);
+		tabHost.addTab(spec);
 
-	    tabHost.setCurrentTab(0);
-	    
-	    int versionCode = 0;
-	    try {
+		intent = new Intent().setClass(this, ViewTranslations.class);
+		spec = tabHost.newTabSpec("listMorse").setIndicator("List Morse").setContent(intent);
+		tabHost.addTab(spec);
+
+		tabHost.setCurrentTab(0);
+
+		int versionCode = 0;
+		try {
 			versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 		} catch (NameNotFoundException e) {
 			Log.e(TAG, "Package not found!");
 		}
 
-	    PreferenceGetter prefs = new PreferenceGetter(getApplicationContext());
-	    boolean needToDisplayULA = prefs.needToDisplayULA(versionCode);
-	    if(needToDisplayULA){
-	    	showPrefs();
-	    }
-	    
-		// Look up the AdView as a resource and load a request.
-		AdView adView = (AdView)this.findViewById(R.id.adView);
-		adView.loadAd(new AdRequest());
+		PreferenceGetter prefs = new PreferenceGetter(getApplicationContext());
+		boolean needToDisplayULA = prefs.needToDisplayULA(versionCode);
+		if(needToDisplayULA){
+			showULA();
+			//ULA
+		}
+
+		boolean unlockerFound;
+		try {
+			getPackageManager().getPackageInfo("com.kopysoft.unlocker", 0);
+			unlockerFound = true;
+		} catch (NameNotFoundException e) {
+			unlockerFound = false;
+			Log.e(TAG, "Unlocker Not Found!");
+		}
+
+		if(!unlockerFound){
+			// Look up the AdView as a resource and load a request.
+			AdView adView = (AdView)this.findViewById(R.id.adView);
+			adView.loadAd(new AdRequest());
+		}
 	}
 
 	@Override
@@ -111,6 +123,15 @@ public class MorseMessenger extends TabActivity {
 	 */
 	public void showPrefs(){
 		Intent prefIntent = new Intent(this, com.kopysoft.MorseMessenger.Preferences.class);
+		startActivity(prefIntent);
+	}
+	
+	/** Describes the showULA() method
+	 * 
+	 * 	Shows the ULA in a dialog
+	 */
+	public void showULA(){
+		Intent prefIntent = new Intent(this, com.kopysoft.MorseMessenger.ULA.class);
 		startActivity(prefIntent);
 	}
 
