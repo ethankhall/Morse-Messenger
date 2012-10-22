@@ -26,6 +26,7 @@ package com.kopysoft.MorseMessenger.UIService;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -102,7 +103,8 @@ public class VibrateLocally extends AsyncTask<Object, String, Void> {
 
 	protected void onProgressUpdate(String... progress) {
 		WebView singALong = (WebView) mActicity.findViewById(R.id.singALong);
-		singALong.loadData(progress[0], "text/html", "UTF-8");
+		//singALong.loadData(progress[0], "text/html", "UTF-8");
+        singALong.loadDataWithBaseURL(null, progress[0], "text/html", "utf-8", null);
 	}
 
 	protected void onPostExecute(Void param) {
@@ -157,48 +159,63 @@ public class VibrateLocally extends AsyncTask<Object, String, Void> {
 			if(printDebugMessages) Log.d(TAG, "Message[" + i + "]: " + messageText[i]);
 		}
 
+        PowerManager pm = (PowerManager)mActicity.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Morse Messenger");
+        mWakeLock.acquire();
+
 		int timeToPlay = 0;
-		try{
-			Thread.sleep(speed * 3);
-			for(int i = 0; i < messageText.length; i++){
-				String messageToSend = getHTML(i, message, messageText, true);
-				if(printDebugMessages) Log.d(TAG, messageToSend);
-				publishProgress(messageToSend);
-				//Send Morse Code
-				String charToSend = message[i];
-				if(charToSend != null){
-					byte[] brokenString = charToSend.getBytes();
-					for(int j = 0; j < brokenString.length; j++){
+        try{
+            Thread.sleep(speed * 3);
+            for(int i = 0; i < messageText.length; i++){
+                String messageToSend = getHTML(i, message, messageText, true);
+                if(printDebugMessages) Log.d(TAG, messageToSend);
+                publishProgress(messageToSend);
+                //Send Morse Code
+                String charToSend = message[i];
+                if(printDebugMessages) Log.d(TAG,"Char: " + message[i]);
+                if(charToSend != null){
+                    for(int j = 0; j < charToSend.length(); j++){
+                        if(printDebugMessages) Log.d(TAG,"Play: " + charToSend.charAt(j));
 
-						if(((char)brokenString[j]) == '.'){
-							timeToPlay = speed;
-						} else if(((char)brokenString[j]) == '-') {
-							timeToPlay = speed * 3;
-						} else if(((char)brokenString[j]) == ' ') {
-							timeToPlay = speed * 2;	//Will add up to 7
-						}
+                        if( charToSend.charAt(j) == '.'){
+                            timeToPlay = speed;
+                        } else if(charToSend.charAt(j) == '-') {
+                            timeToPlay = speed * 3;
+                        } else if(charToSend.charAt(j) == ' ') {
+                            timeToPlay = speed * 2;	//Will add up to 7
+                        }
 
-						if(((char)brokenString[j]) != ' '){
-							vib.vibrate(timeToPlay);
-						} 
+                        if(charToSend.charAt(j) != ' '){
+                            vib.vibrate(timeToPlay);
+                        }
 
-						Thread.sleep(timeToPlay);
-						Thread.sleep(speed);
-					}
-					Thread.sleep(speed * 3);
-				}
-				if(isCancelled()){
-					return null;
-				}
-			}
-			String messageToSend = getHTML(messageText.length, message, messageText, false);
-			publishProgress(messageToSend);
-			Thread.sleep(speed * 7);
-		} catch(Exception e){
-			if(!isCancelled()){
-				Log.e(TAG, "Thread Error");
-			}
-		}
+                        Thread.sleep(timeToPlay);
+                        Thread.sleep(speed);
+                    }
+                    Thread.sleep(speed * 3);
+                }
+                if(isCancelled()){
+                    Log.d(TAG, "isCancelled()");
+                    break;
+                }
+            }
+            String messageToSend = getHTML(messageText.length, message, messageText, false);
+            publishProgress(messageToSend);
+            Thread.sleep(speed * 14);
+        } catch(Exception e){
+            Log.e(TAG, e.toString());
+            if(!isCancelled()){
+                Log.e(TAG, "Thread Error");
+            }
+            if (mWakeLock != null) {
+                mWakeLock.release();
+                mWakeLock = null;
+            }
+        }
+        if (mWakeLock != null) {
+            mWakeLock.release();
+            mWakeLock = null;
+        }
 		return null;
 	}
 

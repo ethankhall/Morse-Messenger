@@ -48,22 +48,18 @@ public class ViewTranslationsAdapter extends BaseAdapter{
 		map = new StringMap();
 	}
 
-	@Override
 	public int getCount() {
 		return mMessage.length();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return mMessage.charAt(position);
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		if(printDebugMessages) Log.d(TAG, "Position: " + position);

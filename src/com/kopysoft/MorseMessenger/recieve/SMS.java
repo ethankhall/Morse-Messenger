@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.kopysoft.MorseMessenger.Defines;
@@ -47,13 +48,23 @@ public class SMS extends BroadcastReceiver {
 		String messages = "";
 		PreferenceGetter pg = new PreferenceGetter(context);
 
+        Log.d(TAG, "onReceive");
+
 		if(!playMessage(context)) return;
 		if(!pg.isSMSEnabled()){
+            Log.d(TAG, "SMS not enabled");
 			return;
 		}
 		if(!pg.isWidgetEnabled()){
+            Log.d(TAG, "Widget not enabled");
 			return;
 		}
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if(tm.getCallState() != TelephonyManager.CALL_STATE_IDLE){
+            Log.d(TAG, "Not Idle");
+            return;
+        }
+
 
 		// Get received SMS array
 		Object[] smsExtra = (Object[]) extras.get( SMS_EXTRA_NAME );

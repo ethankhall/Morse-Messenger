@@ -132,7 +132,7 @@ public class MorseMessenger extends TabActivity {
 	 */
 	public void showULA(){
 		Intent prefIntent = new Intent(this, com.kopysoft.MorseMessenger.ULA.class);
-		startActivity(prefIntent);
+		startActivityForResult(prefIntent,0);
 	}
 
 	/** Describes the method showHelp()
@@ -142,4 +142,15 @@ public class MorseMessenger extends TabActivity {
 	public void showHelp(){
 		return;
 	}
+
+    protected void onActivityResult(int requestCode, int resultCode,
+             Intent data) {
+         if (requestCode == 0) {
+             if (resultCode == RESULT_CANCELED) {
+                 // A contact was picked.  Here we will just display it
+                 // to the user.
+                 finish();
+             }
+         }
+     }
 }

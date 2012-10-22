@@ -3,7 +3,7 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
 	<RelativeLayout android:id="@+id/relativeLayout1"
-		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:padding="5dip">
 		<TextView android:text="Slower" android:layout_height="wrap_content"
 			android:layout_alignParentLeft="true" android:id="@+id/textView1"
@@ -13,7 +13,7 @@
 			android:layout_width="wrap_content" />
 	</RelativeLayout>
 	<SeekBar android:id="@+id/seekBar1" android:layout_height="wrap_content"
-		android:layout_width="match_parent"
+		android:layout_width="fill_parent"
 		android:progress="75"
 		android:defaultValue="75"
 		android:max="150" 

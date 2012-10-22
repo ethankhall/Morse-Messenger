@@ -6,7 +6,7 @@
 		android:layout_width="fill_parent" android:layout_height="fill_parent">
 		<EditText android:text=""
 			android:layout_height="wrap_content" android:id="@+id/messageInput"
-			android:layout_width="match_parent" />
+			android:layout_width="fill_parent"/>
 		<TableLayout android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:stretchColumns="*"
 			android:layout_gravity="fill_vertical">
@@ -30,17 +30,17 @@
 			<TextView android:text="Speed:" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" />
 			<SeekBar android:id="@+id/seekBarSpeed"
-				android:layout_height="wrap_content" android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
 				android:max="110" android:progress="65" android:padding="5dip" />
 
 			<TextView android:text="Tone: " android:layout_width="wrap_content"
 				android:layout_height="wrap_content" />
 			<SeekBar android:id="@+id/seekBarTone" android:layout_height="wrap_content"
-				android:layout_width="match_parent" android:max="15"
+				android:layout_width="fill_parent" android:max="15"
 				android:progress="7" android:padding="5dip" />
 		</LinearLayout>
 		<WebView android:layout_height="wrap_content" android:text=""
-			android:id="@+id/singALong" android:layout_width="match_parent"
+			android:id="@+id/singALong" android:layout_width="fill_parent"
 			android:visibility="invisible" android:enabled="false" />
 	</LinearLayout>
 </ScrollView>

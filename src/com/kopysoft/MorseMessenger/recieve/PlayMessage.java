@@ -47,6 +47,15 @@ public class PlayMessage extends IntentService {
 		super("PlayMessage");
 	}
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent.getAction() != null && intent.getAction().equals("stop"))
+            stopSelf();
+        else
+            onStart(intent, startId);
+        return START_NOT_STICKY;
+    }
+
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
@@ -84,6 +93,8 @@ public class PlayMessage extends IntentService {
 		char[] charMessage = message.toCharArray();
 		StringMap map = new StringMap();
 		int timeToPlay = 0;
+        AudioManager audio = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+        int prevLevel = audio.getStreamVolume(AudioManager.STREAM_RING);
 
 		for(int i = 0; i < charMessage.length; i++){
 			String charToSend = map.getVal(Character.toString((char)charMessage[i]));
@@ -109,6 +120,9 @@ public class PlayMessage extends IntentService {
 					Thread.sleep(delay);
 				}
 				Thread.sleep(delay * 3);
+                if(prevLevel != audio.getStreamVolume(AudioManager.STREAM_RING)){
+                    break;
+                }
 			}
 		}
 	}
@@ -125,10 +139,13 @@ public class PlayMessage extends IntentService {
 	 * @throws InterruptedException
 	 */
 	private void playMessageSound(String message, int delay, int tone, int volume) throws InterruptedException{
-		ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,volume);
+		ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_RING,volume);
 		char[] charMessage = message.toCharArray();
 		StringMap map = new StringMap();
 		int timeToPlay = 0;
+        AudioManager audio = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+        int prevLevel = audio.getStreamVolume(AudioManager.STREAM_RING);
+
 
 		for(int i = 0; i < charMessage.length; i++){
 			String charToSend = map.getVal(Character.toString((char)charMessage[i]));
@@ -153,6 +170,9 @@ public class PlayMessage extends IntentService {
 					Thread.sleep(delay);
 				}
 				Thread.sleep(delay * 3);
+                if(prevLevel != audio.getStreamVolume(AudioManager.STREAM_RING)){
+                    break;
+                }
 			}
 		}
 	}

@@ -35,7 +35,7 @@ public class ViewTranslations extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.view1);
-	  String list = "abcdefghijklmnopqrstuvwxyz0123456789.,?'!/()&:;=+-_\"$@";
+	  String list = "abcdefghijklmnopqrstuvwxyzäæąèłñńàåéđęöøóçĉćĝŝšĥþðĵüŭśźż0123456789.,?'!/()&:;=+-_$@\"";
 	  setListAdapter((ListAdapter) new ViewTranslationsAdapter(list, getApplicationContext()));
 	}
 }
